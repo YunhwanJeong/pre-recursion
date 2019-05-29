@@ -58,7 +58,7 @@ exec('echo "$airtable_api_key"', (err, apikey) => {
     req.write(
       JSON.stringify({
         fields: {
-          subject: "recursion",
+          subject: "PRE-recursion",
           username: username.trim()
         }
       })
@@ -126,7 +126,7 @@ exec('echo "$learnco_api_key"', (err, apikey) => {
     req.write(
       JSON.stringify({
         fields: {
-          subject: "pre-recursion",
+          subject: "PRE-recursion",
           username: username.trim()
         }
       })

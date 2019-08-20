@@ -29,18 +29,34 @@ function stringifyJSON(obj) {
   }
 
   if(Array.isArray(obj)) {
-    let resultArr = [];
     if(obj.length === 0) {
       return "[]";
     }
 
+    let resultArr = [];
     for(let el of obj) {
       if(typeof el === "undefined" || typeof el === "function" || typeof el === "symbol") {
-        resultArr.push(null);
+        resultArr.push("null");
       } else {
-        resultArr.push(stringifyJSON(el))
+        resultArr.push(stringifyJSON(el));
       }
     }
+    return "[" + resultArr + "]";
+  }
+
+  if(typeof obj === "object") {
+    if(Object.keys(obj).length === 0) {
+      return "{}";
+    }
+    
+    let resultObj = [];
+    for(let prop in obj) {
+      if(typeof obj[prop] !== "undefined" && typeof obj[prop] !== "function" && typeof obj[prop] !== "symbol") {
+        let property = stringifyJSON(prop) + ":" + stringifyJSON(obj[prop]);
+        resultObj.push(property);
+      }
+    }
+    return "{" + resultObj + "}";
   }
 
 };

@@ -9,13 +9,21 @@
 // childNodes는 직계자손 리스트를 리턴
 // classList는 해당 요소의 class 리스트를 리턴
 
-/**pseudo code
+/** <한 줄 기능 정의>
+ *  재귀를 활용하여->전달된 인자와 일치하는 className을 가진 모든 요소들을 담은 배열을 리턴
  * 
- * 인자로 className을 받아서 -> 호출한 root Element의 모든 자식 요소들의 class들과 대조하여 -> 일치하는 요소들을 HTMLCollection으로 리턴
- * 작은 문제를 해결한 다음, 전체를 재귀로 해결해야 함
+ * <유의할 점>
+ * 
+ * 자식 노드들의 깊이는 알 수 없기에, 내부에 재귀 함수를 따로 정의할 필요가 있어보임.
  * 
  * 
  * 
+ * <알고리즘>
+ * 빈 배열과 body 요소 가리키는 변수 정의.
+ * 재귀 함수 내부 => 자식 노드가 있고, classList 중 className과 일치하는 요소가 있으면 push
+ * 
+ * 
+ * pseudo code
  * 
  * -className 입력
  *  -body 태그에 한정해서 className이 일치하는게 있으면 document.body 리턴
@@ -24,13 +32,19 @@
 function getElementsByClassName(className) {
   let matchedElArr = [];
   let bodyTag = document.body;
-  let bodyTagClasses = bodyTag.classList;
+  
+  function recursion(element) {
+    if(element.classList && element.classList.contains(className)) {
+      matchedElArr.push(element);
+    }
 
-  for(let i = 0; i < bodyTagClasses.length; i++) {
-    if(bodyTagClasses[i] === className) {
-      matchedElArr.push(bodyTag);
+    if(element.hasChildNodes) {
+      for(let i = 0; i < element.childNodes.length; i++) {
+        recursion(element.childNodes[i]);
+      }
     }
   }
+  recursion(bodyTag);
 
-  
+  return matchedElArr;
 };

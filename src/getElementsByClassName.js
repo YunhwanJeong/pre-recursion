@@ -39,15 +39,13 @@ function getElementsByClassName(className) {
   let bodyTag = document.body;
 
   function checkClassAndChildnodesByRecursion(element) {
-    if(element.classList.length && element.classList.contains(className)) {
+    if(element.classList && element.classList.contains(className)) {
       matchedElementArr.push(element);
     } 
     
     if(element.hasChildNodes()) {
       for(let i = 0; i < element.childNodes.length; i++) {
-        if(element.childNodes[i].hasChildNodes()) {
           checkClassAndChildnodesByRecursion(element.childNodes[i]);
-        }
       }
     }
   }
